@@ -5,30 +5,39 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.appspot.pistatium.mahougen.utils.Vector
-import java.util.*
-
+import icepick.Icepick
 
 /**
  * Created by kimihiro on 16/03/25.
  */
 class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var vertex = 5
+    private var vertex = 10
     private var center: Vector = Vector(0f, 0f)
     private val paint: Paint = Paint()
-    private val pathArray: Array<Path>
-    private val path: Path = Path()
+
+    @icepick.State
+    val pathArray: Array<Path>
 
     init {
         this.pathArray = Array(this.vertex, { i -> Path()})
-        this.paint.color = Color.BLACK
+        this.paint.color = Color.WHITE
         this.paint.style = Paint.Style.STROKE
         this.paint.isAntiAlias = true
-        this.paint.strokeWidth = 10f
+        this.paint.strokeWidth = 3f
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
     }
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
@@ -38,11 +47,9 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
         pathArray.forEach { p ->
             canvas.drawPath(p, paint)
         }
-
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -77,8 +84,8 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         return true
     }
 
-    fun delete() {
-        this.path.reset()
+    fun clear() {
+        this.pathArray.forEach { p -> p.reset() }
         invalidate()
     }
 }
