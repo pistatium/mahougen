@@ -5,40 +5,36 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import android.os.Parcelable
+import android.support.v4.content.ContextCompat
+
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.appspot.pistatium.mahougen.R
 import com.appspot.pistatium.mahougen.utils.Vector
-import icepick.Icepick
 
 /**
  * Created by kimihiro on 16/03/25.
  */
 class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var vertex = 10
+    private var vertexCount = 12
     private var center: Vector = Vector(0f, 0f)
-    private val paint: Paint = Paint()
+    private var paint: Paint = Paint()
 
-    @icepick.State
     val pathArray: Array<Path>
 
     init {
-        this.pathArray = Array(this.vertex, { i -> Path()})
+        this.setBackgroundColor(ContextCompat.getColor(context, R.color.background))
+        this.pathArray = Array(this.vertexCount, { i -> Path()})
         this.paint.color = Color.WHITE
         this.paint.style = Paint.Style.STROKE
         this.paint.isAntiAlias = true
         this.paint.strokeWidth = 3f
     }
 
-    override fun onSaveInstanceState(): Parcelable {
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
-    }
 
-    override fun onRestoreInstanceState(state: Parcelable) {
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
-    }
+
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
         super.onWindowFocusChanged(hasWindowFocus)
@@ -49,6 +45,7 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         super.onDraw(canvas)
         pathArray.forEach { p ->
             canvas.drawPath(p, paint)
+
         }
     }
 
@@ -57,9 +54,9 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         val current = Vector(event.x, event.y)
         val direction = current - this.center
         val r = direction.size()
-        val alpha = (2.0 * Math.PI / this.vertex).toFloat()
+        val alpha = (2.0 * Math.PI / this.vertexCount).toFloat()
         var theta = direction.angle()
-        for (i in 0 .. this.vertex) {
+        for (i in 0 .. this.vertexCount) {
             if (i * alpha > theta) {
                 theta -= (i - 1) * alpha
                 break
@@ -82,6 +79,13 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         }
         invalidate()
         return true
+    }
+
+    fun configure(vertexCount: Int, paint: Paint? = null) {
+        this.vertexCount = vertexCount
+        paint?.let {
+            this.paint = paint
+        }
     }
 
     fun clear() {
