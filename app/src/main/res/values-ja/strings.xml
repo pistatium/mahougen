@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mahougen</string>
+    <string name="reset_button">作りなおす</string>
+    <string name="share_button">共有</string>
+    <string name="banner_ad_unit_id">ca-app-pub-2359565431337443/3285536077</string>
+    <string name="choose_app">共有先のアプリを選んでください</string>
+</resources>

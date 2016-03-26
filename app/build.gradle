@@ -29,10 +29,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'frankiesardo:icepick:3.1.0'
-    provided 'frankiesardo:icepick-processor:3.1.0'
-
+    compile 'com.google.android.gms:play-services-ads:7.5.0'
 }
+
 buildscript {
     ext.kotlin_version = '1.0.1-1'
 
@@ -44,7 +43,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
     }
 }
+
 repositories {
     mavenCentral()
-    maven {url "https://clojars.org/repo/"}
 }

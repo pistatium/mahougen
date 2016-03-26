@@ -18,11 +18,11 @@ import com.appspot.pistatium.mahougen.utils.Vector
  */
 class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var vertexCount = 12
-    private var center: Vector = Vector(0f, 0f)
+    private var vertexCount = 20
+    private var center: Vector = Vector(0.0, 0.0)
     private var paint: Paint = Paint()
 
-    val pathArray: Array<Path>
+    var pathArray: Array<Path>
 
     init {
         this.setBackgroundColor(ContextCompat.getColor(context, R.color.background))
@@ -38,7 +38,7 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
         super.onWindowFocusChanged(hasWindowFocus)
-        this.center = Vector(width / 2.0f, height / 2.0f)
+        this.center = Vector(width / 2.0, height / 2.0)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -51,10 +51,10 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
 
-        val current = Vector(event.x, event.y)
+        val current = Vector(event.x.toDouble(), event.y.toDouble())
         val direction = current - this.center
         val r = direction.size()
-        val alpha = (2.0 * Math.PI / this.vertexCount).toFloat()
+        val alpha = (2.0 * Math.PI / this.vertexCount.toDouble())
         var theta = direction.angle()
         for (i in 0 .. this.vertexCount) {
             if (i * alpha > theta) {
@@ -83,9 +83,11 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     fun configure(vertexCount: Int, paint: Paint? = null) {
         this.vertexCount = vertexCount
+        pathArray = Array(this.vertexCount, { i -> Path()})
         paint?.let {
             this.paint = paint
         }
+        invalidate()
     }
 
     fun clear() {
@@ -95,9 +97,9 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 }
 
 fun Path.moveTo(v: Vector) {
-    this.moveTo(v.x, v.y)
+    this.moveTo(v.x.toFloat(), v.y.toFloat())
 }
 
 fun Path.lineTo(v: Vector) {
-    this.lineTo(v.x, v.y)
+    this.lineTo(v.x.toFloat(), v.y.toFloat())
 }
