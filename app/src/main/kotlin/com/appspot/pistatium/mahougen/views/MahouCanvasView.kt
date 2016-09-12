@@ -33,9 +33,6 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         this.paint.strokeWidth = 3f
     }
 
-
-
-
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
         super.onWindowFocusChanged(hasWindowFocus)
         this.center = Vector(width / 2.0, height / 2.0)
@@ -66,6 +63,9 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
             MotionEvent.ACTION_DOWN -> {
                 for ((i, p) in this.pathArray.withIndex()) {
                     var target = this.center + Vector.ofAngle(theta + i * alpha) * r
+                    if (vertexCount % 2 == 0 && i % 2 == 0) {
+                        target = this.center + Vector.ofAngle(-theta + (i + 1) * alpha) * r
+                    }
                     p.moveTo(target)
                 }
             }
@@ -73,6 +73,9 @@ class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, att
             MotionEvent.ACTION_UP -> {
                 for ((i, p) in this.pathArray.withIndex()) {
                     var target = this.center + Vector.ofAngle(theta + i * alpha) * r
+                    if (vertexCount % 2 == 0 &&i % 2 == 0) {
+                        target = this.center + Vector.ofAngle(-theta + (i + 1) * alpha) * r
+                    }
                     p.lineTo(target)
                 }
             }
