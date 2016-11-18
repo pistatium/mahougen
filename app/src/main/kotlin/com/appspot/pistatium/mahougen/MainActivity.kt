@@ -48,7 +48,9 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
 
     override fun onProgressChanged(p0: SeekBar?, progress: Int, fromUser: Boolean) {
-        mahouCanvasView.configure(progress + 3)
+        val mp = progress + 3
+        mahouCanvasView.configure(mp)
+        tvMp.text = "MP: $mp"
     }
     override fun onStartTrackingTouch(p0: SeekBar?) {
     }
