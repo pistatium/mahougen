@@ -18,7 +18,7 @@ import com.appspot.pistatium.mahougen.utils.Vector
  */
 class MahouCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var vertexCount = 20
+    private var vertexCount = 10
     private var center: Vector = Vector(0.0, 0.0)
     private var paint: Paint = Paint()
 
