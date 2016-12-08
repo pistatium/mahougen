@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
+    android:fitsSystemWindows="false"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -22,7 +23,7 @@
         <SeekBar
             android:id="@+id/vertexSlider"
             android:paddingBottom="8dp"
-            android:max="20"
+            android:max="21"
             android:progress="10"
             android:layout_marginBottom="8dp"
             android:layout_width="0dp"
