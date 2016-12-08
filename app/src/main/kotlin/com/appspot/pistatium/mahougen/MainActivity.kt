@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
 import android.support.v4.content.FileProvider
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import com.appspot.pistatium.mahougen.utils.BitmapUtils
