@@ -3,16 +3,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '24.0.2'
+    compileSdkVersion rootProject.compileSdk
+    buildToolsVersion rootProject.buildTools
 
     defaultConfig {
-        applicationId "com.appspot.pistatium.mahougen"
-        minSdkVersion 17
-        targetSdkVersion 23
-        versionCode 4
-        versionName "1.3"
+        minSdkVersion rootProject.minSdk
+        targetSdkVersion rootProject.compileSdk
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
     }
+    baseFeature true
+
     buildTypes {
         release {
             minifyEnabled false
