@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adRequest = AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
 
         vertexSlider.setOnSeekBarChangeListener(this)
     }
